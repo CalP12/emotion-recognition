@@ -100,7 +100,7 @@ if mode == "train":
 '''
 # emotions will be displayed on your face from the webcam feed
 if mode == "display":
-    model.load_weights('/content/Emotion-detection/src/model.h5')
+    model.load_weights('/content/emotion-recognition/src/model.h5')
 
     # prevents openCL usage and unnecessary logging messages
     cv2.ocl.setUseOpenCL(False)
@@ -109,7 +109,7 @@ if mode == "display":
     emotion_dict = {0: "Angry", 1: "Disgusted", 2: "Fearful", 3: "Happy", 4: "Neutral", 5: "Sad", 6: "Surprised"}
 
     # start the webcam feed
-    frame = cv2.imread("/content/Emotion-detection/images/input/input.jpg")
+    frame = cv2.imread("/content/emotion-recognition/images/input/input.jpg")
     facecasc = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     faces = facecasc.detectMultiScale(gray,scaleFactor=1.3, minNeighbors=5)
@@ -121,5 +121,5 @@ if mode == "display":
         prediction = model.predict(cropped_img)
         maxindex = int(np.argmax(prediction))
         cv2.putText(frame, emotion_dict[maxindex], (x, y-10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 1, cv2.LINE_AA)
-    cv2.imwrite('/content/Emotion-detection/images/output/output.png', frame)
+    cv2.imwrite('/content/emotion-recognition/images/output/output.png', frame)
 
